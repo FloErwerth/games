@@ -1,0 +1,16 @@
+.carousel {
+  background-color: black;
+  height: 100%;
+
+  &-image {
+    width: 100%;
+  }
+
+  &-inner {
+    position: relative;
+    height: 100%;
+    flex-direction: row;
+    display: flex;
+    transition: 0.5s;
+  }
+}
