@@ -1,0 +1,22 @@
+.auth-register-link {
+    font-size: 13px !important;
+    cursor: pointer;
+    align-self: center;
+    justify-self: center;
+}
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-self: center;
+}
+.auth-hide {
+    visibility: hidden;
+}
+.auth-modal-wrapper {
+    display: grid;
+    gap: 30px;
+    grid-template-rows: 1fr 40px 15px;
+    grid-template-columns: 100%;
+    justify-content: space-between;
+}

@@ -1,9 +1,9 @@
-import {Button, Dialog, IconButton} from "@mui/material";
+import {Button} from "@mui/material";
 import {useState} from "react";
 import {CreateRoomContent} from "./CreateRoomContent";
 import {JoinRoomContent} from "./JoinRoomContent";
-import {Cancel} from "@mui/icons-material";
 import "./styles.css";
+import {Modal} from "../Modal/Modal";
 
 interface RoomModalProps {
     open: boolean;
@@ -25,9 +25,7 @@ const ModalContent = () => {
 }
 
 export const RoomModal = ({open, onClose}: RoomModalProps) => {
-    return <Dialog open={open}>
-        <div className="room-modal" >
-            <div className="room-modal-header"><div>Spieleraum</div><IconButton onClick={onClose}><Cancel /></IconButton></div>
-            <ModalContent /></div>
-    </Dialog>
+    return <Modal open={open} onClose={onClose} headerText="Spieleraum">
+            <ModalContent />
+    </Modal>
 }

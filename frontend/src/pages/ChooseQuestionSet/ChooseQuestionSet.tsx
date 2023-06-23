@@ -2,9 +2,9 @@ import {useAppDispatch, useAppSelector} from "../../store";
 import {getChosenGeneralTopic, getTopicInfos} from "../../store/selectors/topicSelectors";
 import {useCallback, useEffect, useMemo} from "react";
 import {useNavigate} from "react-router-dom";
-import {setChosenPackName} from "../../store/reducers/topics/topics";
 import {CardWithPicture} from "../../components/CardWithPicture/CardWithPicture";
 import "./styles.css";
+import {setChosenPackName} from "../../store/reducers/topics";
 
 export const ChooseQuestionSet = () => {
     const chosenTopic = useAppSelector(getChosenGeneralTopic);
