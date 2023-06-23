@@ -39,7 +39,7 @@ export const ChooseQuestionSet = () => {
 
     return (
         <>
-            {chosenTopic && <h2>{chosenTopic}</h2>}
+            {chosenTopic && <h2>Wähle ein Frageset zur Kategorie {chosenTopic}</h2>}
             {infos && hasMultiplePacks && (
                         <div className="pack-wrapper">
                             {extractedInfos.map(({packName, id}) => (

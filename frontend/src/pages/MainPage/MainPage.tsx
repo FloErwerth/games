@@ -13,8 +13,7 @@ export const MainPage = () => {
     return (
         <>
             <div className={"main"}>
-                <h1 className={"main-title"}>Pietsmiet 50 Fragen</h1>
-                <h2>Wähle einer 50 Fragen Kategorien, um zu starten</h2>
+                <h2>Wähle eine Kategorie</h2>
             </div>
             <ChooseTopic />
         </>

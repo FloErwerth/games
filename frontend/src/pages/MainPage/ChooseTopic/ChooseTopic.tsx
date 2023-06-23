@@ -27,7 +27,7 @@ export const ChooseTopic = () => {
 
     return (
         <div className="wrapper">
-            <div className="topic-filter"><TextFieldWithDelete label="Themen filtern" variant="outlined" value={filter} setValue={setFilter} /></div>
+            <div className="topic-filter"><TextFieldWithDelete label="Kategorien filtern" variant="outlined" value={filter} setValue={setFilter} /></div>
             <div className="topic-wrapper">
             {sortedTopics.map(([generalTopicName, infos]) => {
                 const isFiltered = filtered.some(([filteredTopicName]) => filteredTopicName === generalTopicName);
