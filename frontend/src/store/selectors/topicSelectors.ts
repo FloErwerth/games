@@ -1,26 +1,25 @@
-import {AppState} from "../index";
 import {GeneralTopicName, topics} from "../../data";
 import {createSelector} from "@reduxjs/toolkit";
+import {getState} from "./baseSelectors";
 
-const getState = createSelector([(state: AppState) => state], (state) => state);
-
-export const getGeneralTopics = createSelector([getState], (state) => {
-    return Object.keys(state.availableTopics).map((generalTopic) => generalTopic) as GeneralTopicName[];
+const getTopicState = createSelector([getState], state => state.topicModel);
+export const getGeneralTopics = createSelector([getTopicState], (topicState) => {
+    return Object.keys(topicState.availableTopics).map((generalTopic) => generalTopic) as GeneralTopicName[];
 });
 
-export const getTopics = createSelector([getState], (state) => {
-    return state.availableTopics ?? topics;
+export const getTopics = createSelector([getTopicState], (topicState) => {
+    return topicState.availableTopics ?? topics;
 })
 
-export const getChosenGeneralTopic = createSelector([getState], (state) => {
-    return state.chosenGeneralTopic;
+export const getChosenGeneralTopic = createSelector([getTopicState], (topicState) => {
+    return topicState.chosenGeneralTopic;
 });
 
 export const getTopicInfos = createSelector([getChosenGeneralTopic, getTopics], (generalTopic, topics) => {
     return generalTopic && topics[generalTopic];
 });
 
-export const getChosenPackName = createSelector([getState], (state) => state.chosenPackName);
+export const getChosenPackName = createSelector([getTopicState], (topicState) => topicState.chosenPackName);
 
 export const getQuestionAnswerPairs = createSelector([getTopicInfos, getChosenPackName], (topicInfos, packname) => {
     return packname && topicInfos?.packs[packname];

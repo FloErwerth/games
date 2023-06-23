@@ -3,11 +3,12 @@ import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../store";
 import {getTopics} from "../../../store/selectors/topicSelectors";
 import {GeneralTopicInfo, GeneralTopicName} from "../../../data";
-import {setChosenGeneralTopic} from "../../../store/reducers/topics/topics";
 import "./styles.css";
 import {useFilter} from "../../../hooks/useFilter";
-import {TextFieldWithDelete} from "../../../components/TextFieldWithDelete/TextFieldWithDelete";
+import {TextFieldWithAdornment} from "../../../components/TextFieldWithAdornment/TextFieldWithAdornment";
 import {CardWithPicture} from "../../../components/CardWithPicture/CardWithPicture";
+import {ClickableDelteIcon} from "../../../components/ClickableIcons/ClickableDeleteIcon";
+import {setChosenGeneralTopic} from "../../../store/reducers/topics";
 
 export const ChooseTopic = () => {
     const topics = useAppSelector(getTopics);
@@ -27,7 +28,7 @@ export const ChooseTopic = () => {
 
     return (
         <div className="wrapper">
-            <div className="topic-filter"><TextFieldWithDelete label="Themen filtern" variant="outlined" value={filter} setValue={setFilter} /></div>
+            <div className="topic-filter"><TextFieldWithAdornment Icon={<ClickableDelteIcon onClick={() => setFilter("")} />} label="Kategorien filtern" variant="outlined" value={filter} setValue={setFilter} /></div>
             <div className="topic-wrapper">
             {sortedTopics.map(([generalTopicName, infos]) => {
                 const isFiltered = filtered.some(([filteredTopicName]) => filteredTopicName === generalTopicName);
