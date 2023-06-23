@@ -9,7 +9,7 @@ import {ChooseQuestionSet} from "./pages/ChooseQuestionSet/ChooseQuestionSet";
 import {PlayPage} from "./pages/PlayPage/PlayPage";
 import {Header} from "./components/Header/Header";
 import {About} from "./pages/About/About";
-import {setIsLoggedIn, setUserId} from "./store/reducers/auth";
+import {setIsLoggedIn, setUserId, setUserName} from "./store/reducers/auth";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
@@ -39,6 +39,7 @@ const App = () => {
         if(!initialized) {
             const state = getState();
             if(state) {
+                dispatch(setUserName(state.authModel.userName));
                 dispatch(setUserId(state.authModel.userId));
                 dispatch(setIsLoggedIn(state.authModel.isLoggedIn));
             }

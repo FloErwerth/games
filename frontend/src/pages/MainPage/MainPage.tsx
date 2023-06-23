@@ -2,6 +2,7 @@ import {ChooseTopic} from "./ChooseTopic/ChooseTopic";
 
 
 export const MainPage = () => {
+
     return (
         <>
             <div className={"main"}>

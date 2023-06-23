@@ -1,10 +1,10 @@
 import {useCallback, useMemo, useState} from "react";
 import {Modal} from "../Modal/Modal";
 import {Button, Link, TextField} from "@mui/material";
-import {FirebaseError, login, register} from "../../firebase";
+import {addFirebaseUser, FirebaseError, getStoredUserData, login, register} from "../../firebase";
 import "./authStyles.css";
 import {useAppDispatch} from "../../store";
-import {setIsLoggedIn, setUserId} from "../../store/reducers/auth";
+import {setIsLoggedIn, setUserId, setUserName} from "../../store/reducers/auth";
 
 interface AuthenticationModalProps {
     open: boolean;
@@ -13,6 +13,7 @@ interface AuthenticationModalProps {
 
 export const AuthenticationModal = ({open, onClose}: AuthenticationModalProps) => {
     const [showLogin, setShowLogin] = useState(true);
+    const [localUserName, setLocalUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [secondPassword, setSecondPassword] = useState("");
@@ -21,6 +22,11 @@ export const AuthenticationModal = ({open, onClose}: AuthenticationModalProps) =
     const buttonText = useMemo(() => showLogin ? "Einloggen" : "Registrieren", [showLogin])
 
     const handleSetAuth = useCallback((userId: string, loggedIn: boolean) => {
+        getStoredUserData(userId).then((data) => {
+            if(data && data.userName) {
+                dispatch(setUserName(data.userName));
+            }
+        })
         dispatch(setUserId(userId))
         dispatch(setIsLoggedIn(loggedIn));
         onClose();
@@ -33,16 +39,21 @@ export const AuthenticationModal = ({open, onClose}: AuthenticationModalProps) =
                     handleSetAuth(credential.user.uid, true);
                 }).catch((e: FirebaseError) => console.log(e.code));
             } else {
-                if (password === secondPassword) {
+                if (password === secondPassword && localUserName) {
                     register(email, password).then((credential) => {
                         handleSetAuth(credential.user.uid, true);
+                        addFirebaseUser(credential.user.uid, { userName: localUserName });
                     }).catch((e: FirebaseError) => console.log(e.code));
                 } else {
-                    console.log("password dont match");
+                    if(password !== secondPassword) {
+                        console.log("password dont match");
+                    } else if(!localUserName) {
+                        console.log("no username");
+                    }
                 }
             }
         }
-    }, [email, password, secondPassword, showLogin]);
+    }, [localUserName, email, password, secondPassword, showLogin]);
 
     const handleSwitchBetweenLoginAndRegister = useCallback(() => {
         setShowLogin(!showLogin);
@@ -55,10 +66,11 @@ export const AuthenticationModal = ({open, onClose}: AuthenticationModalProps) =
     return <Modal headerText={buttonText} onClose={onClose} open={open}>
         <div className="auth-modal-wrapper">
             <div className="auth-buttons">
-                <TextField size="small" onChange={(e) => setEmail(e.target.value)} label="E-Mail"></TextField>
-                <TextField size="small" onChange={(e) => setPassword(e.target.value)} label="Passwort"></TextField>
+                {!showLogin && <TextField size="small" onChange={(e) => setLocalUserName(e.target.value)} label="Anzeigename" />}
+                <TextField size="small" onChange={(e) => setEmail(e.target.value)} label="E-Mail" />
+                <TextField size="small" onChange={(e) => setPassword(e.target.value)} label="Passwort" />
                 <TextField className={secondPasswordClasses} size="small"
-                           onChange={(e) => setSecondPassword(e.target.value)} label="Passwort wiederholen"></TextField>
+                           onChange={(e) => setSecondPassword(e.target.value)} label="Passwort wiederholen" />
             </div>
 
             <Button size="small" variant="outlined" onClick={handleClick}>{buttonText}</Button>

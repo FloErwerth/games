@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "games/frontend",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
