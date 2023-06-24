@@ -10,8 +10,11 @@
     grid-template-columns: 20px auto;
     align-items: center;
     gap: 30px;
-    width: 80px;
-    padding: 5px 15px 5px 5px;
+    padding: 8px 16px;
+    min-width: 59px;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .anchor {
     position: relative;
@@ -32,7 +35,5 @@
     width: 100%;
 }
 .menu-wrapper {
-    width: 100px;
     text-align: center;
-    justify-content: center!important;
 }
